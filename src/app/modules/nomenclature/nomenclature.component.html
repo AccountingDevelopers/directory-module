@@ -1,0 +1,58 @@
+<div class="module">
+    <lib-module-header [header]="'Нуменклатура'">
+        <ng-template templateRef="headerToolbar">
+            <p-button icon="pi pi-plus" [label]="'Створити'"
+                (onClick)="dialogStage.isCreateNumenclature = true"></p-button>
+        </ng-template>
+    </lib-module-header>
+
+    <div class="content">
+        <p-treeTable [value]="nomenclaturesDataTable" [scrollable]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Найменування</th>
+                    <th>Код</th>
+                    <th>Артикул</th>
+                    <th>Од.</th>
+                    <th>% ПДВ</th>
+                    <th>Код для ПН (по-умовч.)</th>
+                    <th>Коментар</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                <tr [ttRow]="rowNode">
+                    <td>
+                        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                        {{ rowData.label }}
+                    </td>
+                    <td>{{ rowData.data }}</td>
+                    <td>{{ rowData.type }}</td>
+                    <td>{{ rowData.type }}</td>
+                    <td>{{ rowData.type }}</td>
+                    <td>{{ rowData.type }}</td>
+                    <td>{{ rowData.type }}</td>
+                </tr>
+            </ng-template>
+        </p-treeTable>
+    </div>
+</div>
+
+<p-dialog header="Создать отдел" appendTo="body" styleClass="modal" [maximizable]="true" [modal]="true"
+    [draggable]="true" [resizable]="true" [(visible)]="dialogStage.isCreateNumenclature">
+
+    <div [formGroup]="createNomenclaturesForm">
+        <span class="p-fluid p-field">
+            <input type="text" pInputText required formControlName="label" [placeholder]="'Название отдела'" />
+        </span>
+
+        <span class="p-fluid p-field">
+            <p-treeSelect appendTo="body" [options]="nomenclatures" formControlName="parentId"
+                placeholder="Родительский отдел"></p-treeSelect>
+        </span>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" label="Создать" styleClass="p-button-text"
+            (onClick)="createNomenclature()"></p-button>
+    </ng-template>
+</p-dialog>
