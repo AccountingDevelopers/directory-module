@@ -25,34 +25,46 @@
                         <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
                         {{ rowData.label }}
                     </td>
-                    <td>{{ rowData.data }}</td>
-                    <td>{{ rowData.type }}</td>
-                    <td>{{ rowData.type }}</td>
-                    <td>{{ rowData.type }}</td>
-                    <td>{{ rowData.type }}</td>
-                    <td>{{ rowData.type }}</td>
+                    <td>{{ rowData.code }}</td>
+                    <td>{{ rowData.article }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ rowData.description }}</td>
                 </tr>
             </ng-template>
         </p-treeTable>
     </div>
 </div>
 
-<p-dialog header="Создать отдел" appendTo="body" styleClass="modal" [maximizable]="true" [modal]="true"
-    [draggable]="true" [resizable]="true" [(visible)]="dialogStage.isCreateNumenclature">
+<p-dialog header="Создать номенклатуру" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [(visible)]="dialogStage.isCreateNumenclature">
 
     <div [formGroup]="createNomenclaturesForm">
         <span class="p-fluid p-field">
-            <input type="text" pInputText required formControlName="label" [placeholder]="'Название отдела'" />
+            <input type="text" pInputText required formControlName="label" [placeholder]="'Название нуменклатуры'" />
+        </span>
+
+        <span class="p-fluid p-field">
+            <input type="number" pInputText required formControlName="code" [placeholder]="'Код'" />
+        </span>
+
+        <span class="p-fluid p-field">
+            <input type="number" pInputText required formControlName="article" [placeholder]="'Артикул'" />
+        </span>
+
+        <span class="p-fluid p-field">
+            <textarea pInputTextarea formControlName="description" [placeholder]="'Коментар'"></textarea>
         </span>
 
         <span class="p-fluid p-field">
             <p-treeSelect appendTo="body" [options]="nomenclatures" formControlName="parentId"
-                placeholder="Родительский отдел"></p-treeSelect>
+                placeholder="Родительская нуменклатура"></p-treeSelect>
         </span>
     </div>
 
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" label="Создать" styleClass="p-button-text"
+        <p-button icon="pi pi-check" [label]="'Создать'" styleClass="p-button-text"
             (onClick)="createNomenclature()"></p-button>
     </ng-template>
 </p-dialog>

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InitialMenuComponent } from 'ng-accounting';
 import { NomenclatureComponent } from './modules/nomenclature/nomenclature.component';
+import { WarehousesComponent } from './modules/warehouses/warehouses.component';
+import { CounterpartiesComponent } from './modules/counterparties/counterparties.component';
 
 const routes: Routes = [
   {
@@ -19,7 +21,7 @@ const routes: Routes = [
             },
             {
               label: 'Склади',
-              link: 'user-departments'
+              link: 'warehouses'
             },
             {
               label: 'Класифікатор одиниць виміру',
@@ -36,7 +38,7 @@ const routes: Routes = [
           links: [
             {
               label: 'Контрагенти',
-              link: 'users'
+              link: 'counterparties'
             },
             {
               label: 'Договори',
@@ -54,6 +56,14 @@ const routes: Routes = [
   {
     path: 'nomenclature',
     component: NomenclatureComponent
+  },
+  {
+    path: 'warehouses',
+    component: WarehousesComponent
+  },
+  {
+    path: 'counterparties',
+    component: CounterpartiesComponent
   }
 ]
 
