@@ -14,9 +14,7 @@
                 <tr>
                     <th>Наименование в программе</th>
                     <th>ИНН</th>
-                    <th>Полное наименование</th>
                     <th>Коментар</th>
-                    <th>ЭДО</th>
                     <th>Ответственные</th>
                 </tr>
             </ng-template>
@@ -26,43 +24,39 @@
                         <div class="row-label">
                             <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
                             <span class="p-field p-fluid">
-                                <input pInputText [placeholder]="'Наименование в программе'" [(ngModel)]="rowData.label"
+                                <input pInputText [placeholder]="'Наименование в программе'"
+                                    [(ngModel)]="rowData.label.inSystem"
                                     (ngModelChange)="onEdit($event, rowData, 'label.short')">
                             </span>
                         </div>
                     </td>
-                    <td>
-                        <span class="p-field p-fluid">
-                            <input pInputText [placeholder]="'ИНН'" [(ngModel)]="rowData.code"
-                                (ngModelChange)="onEdit($event, rowData, 'edi')">
-                        </span>
-                    </td>
-                    <td>
-                        <span class="p-field p-fluid">
-                            <input pInputText [placeholder]="'Полное наименование'" [(ngModel)]="rowData.code"
-                                (ngModelChange)="onEdit($event, rowData, 'label.full')">
-                        </span>
-                    </td>
-                    <td>
-                        <span class="p-field p-fluid">
-                            <textarea pInputTextarea [placeholder]="'Коментар'" [(ngModel)]="rowData.description"
-                                (ngModelChange)="onEdit($event, rowData, 'description')"></textarea>
-                        </span>
-                    </td>
-                    <td>
-                        <span class="p-field p-fluid">
-                            <input pInputText [placeholder]="'ЭДО'" [(ngModel)]="rowData.code"
-                                (ngModelChange)="onEdit($event, rowData, 'tin')">
-                        </span>
-                    </td>
-                    <td>
-                        <span class="p-field p-fluid">
-                            <p-multiSelect appendTo="body" optionLabel="name.full" dataKey="_id" [filter]="true"
-                                [filterBy]="'name.full'" [ngModel]="rowData.responsibles | responsibles"
-                                [options]="responsibles" [placeholder]="'Ответственные'"
-                                (ngModelChange)="onEdit($event, rowData, 'responsibles')"></p-multiSelect>
-                        </span>
-                    </td>
+                    <ng-container *ngIf="!rowData.isGroup; else isGroup">
+                        <td>
+                            <span class="p-field p-fluid">
+                                <input pInputText [placeholder]="'ИНН'"
+                                    (ngModelChange)="onEdit($event, rowData, 'edi')">
+                            </span>
+                        </td>
+                        <td>
+                            <span class="p-field p-fluid">
+                                <textarea pInputTextarea rows="1" [placeholder]="'Коментар'" [autoResize]="true" [(ngModel)]="rowData.description"
+                                    (ngModelChange)="onEdit($event, rowData, 'description')"></textarea>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="p-field p-fluid">
+                                <p-multiSelect appendTo="body" optionLabel="name.full" dataKey="_id" [filter]="true"
+                                    [filterBy]="'name.full'" [ngModel]="rowData.responsibles | responsibles"
+                                    [options]="responsibles" [placeholder]="'Ответственные'"
+                                    (ngModelChange)="onEdit($event, rowData, 'responsibles')"></p-multiSelect>
+                            </span>
+                        </td>
+                    </ng-container>
+                    <ng-template #isGroup>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </ng-template>
                 </tr>
             </ng-template>
         </p-treeTable>
@@ -75,19 +69,14 @@
     <div [formGroup]="createElementForm">
         <div class="fields__wrapper">
             <div class="fields__wrapper--box">
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label"
+                <span formGroupName="label" class="p-fluid p-field">
+                    <input type="text" pInputText required formControlName="inDocs"
                         [placeholder]="'Название для документов'" />
                 </span>
 
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label"
+                <span formGroupName="label" class="p-fluid p-field">
+                    <input type="text" pInputText required formControlName="inSystem"
                         [placeholder]="'Название в програме'" />
-                </span>
-
-                <span class="p-fluid p-field">
-                    <p-dropdown appendTo="body" optionValue="value" formControlName="type" [placeholder]="'Тип склада'"
-                        [options]="elementTypes"></p-dropdown>
                 </span>
 
                 <span class="p-fluid p-field">
@@ -96,29 +85,27 @@
                 </span>
 
                 <span class="p-fluid p-field">
-                    <div class="p-inputgroup">
-                        <p-dropdown #country appendTo="body" optionValue="value" formControlName="type"
-                            [placeholder]="'Страна регистрации'" [options]="[]"></p-dropdown>
-                        <button type="button" pButton icon="pi pi-arrow-up-right" (click)="accDialogService.fillField('selectCountry', country)"></button>
-                    </div>
+                    <input type="text" pInputText required formControlName="country"
+                        [placeholder]="'Страна регистрации'" />
                 </span>
             </div>
 
             <div class="fields__wrapper--box">
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Налоговий номер'" />
+                <span formGroupName="tax" class="p-fluid p-field">
+                    <input type="text" pInputText required formControlName="number" [placeholder]="'Налоговий номер'" />
                 </span>
 
                 <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'ИНН'" />
+                    <input type="text" pInputText required formControlName="tin" [placeholder]="'ИНН'" />
                 </span>
 
                 <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'КПП'" />
+                    <input type="text" pInputText required formControlName="cor" [placeholder]="'КПП'" />
                 </span>
 
                 <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Рег. номер'" />
+                    <input type="text" pInputText required formControlName="registerNumber"
+                        [placeholder]="'Рег. номер'" />
                 </span>
 
                 <span class="p-fluid p-field">
@@ -128,65 +115,75 @@
         </div>
 
         <span class="p-fluid p-field">
-            <p-fieldset [legend]="'Основной банковский счет'" [toggleable]="true">
+            <p-fieldset formGroupName="bankAccount" [legend]="'Основной банковский счет'" [toggleable]="true">
                 <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Банк'" />
+                    <input type="text" pInputText required formControlName="bank" [placeholder]="'Банк'" />
                 </span>
 
                 <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Номер счета'" />
+                    <input type="text" pInputText required formControlName="number" [placeholder]="'Номер счета'" />
                 </span>
             </p-fieldset>
         </span>
 
         <span class="p-fluid p-field">
             <p-fieldset [legend]="'Адрес и телефон'" [toggleable]="true">
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label"
-                        [placeholder]="'Юридический адрес'" />
+                <span formGroupName="addresses">
+                    <span class="p-fluid p-field">
+                        <input type="text" pInputText required formControlName="legal"
+                            [placeholder]="'Юридический адрес'" />
+                    </span>
+
+                    <span class="p-fluid p-field">
+                        <input type="text" pInputText required formControlName="actual"
+                            [placeholder]="'Фактический адрес'" />
+                    </span>
+
+                    <span class="p-fluid p-field">
+                        <input type="text" pInputText required formControlName="post"
+                            [placeholder]="'Почтовий адрес'" />
+                    </span>
                 </span>
 
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label"
-                        [placeholder]="'Фактический адрес'" />
-                </span>
+                <span formGroupName="contacts">
+                    <span class="p-fluid p-field">
+                        <p-chips formControlName="emails" [placeholder]="'Телефони'"></p-chips>
+                    </span>
 
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Почтовий адрес'" />
-                </span>
-
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Телефони!!!'" />
-                </span>
-
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Emailы!!!'" />
+                    <span class="p-fluid p-field">
+                        <p-chips formControlName="phones" [placeholder]="'Emails'"></p-chips>
+                    </span>
                 </span>
             </p-fieldset>
         </span>
 
         <span class="p-fluid p-field">
-            <p-fieldset [legend]="'Контактное лицо'" [toggleable]="true">
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label"
-                        [placeholder]="'Юридический адрес'" />
+            <p-fieldset formGroupName="contactPerson" [legend]="'Контактное лицо'" [toggleable]="true">
+                <span formGroupName="addresses">
+                    <span class="p-fluid p-field">
+                        <input type="text" pInputText required formControlName="legal"
+                            [placeholder]="'Юридический адрес'" />
+                    </span>
+
+                    <span class="p-fluid p-field">
+                        <input type="text" pInputText required formControlName="actual"
+                            [placeholder]="'Фактический адрес'" />
+                    </span>
+
+                    <span class="p-fluid p-field">
+                        <input type="text" pInputText required formControlName="post"
+                            [placeholder]="'Почтовий адрес'" />
+                    </span>
                 </span>
 
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label"
-                        [placeholder]="'Фактический адрес'" />
-                </span>
+                <span formGroupName="contacts">
+                    <span class="p-fluid p-field">
+                        <p-chips formControlName="emails" [placeholder]="'Телефони'"></p-chips>
+                    </span>
 
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Почтовий адрес'" />
-                </span>
-
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Телефони!!!'" />
-                </span>
-
-                <span class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="label" [placeholder]="'Emailы!!!'" />
+                    <span class="p-fluid p-field">
+                        <p-chips formControlName="phones" [placeholder]="'Emails'"></p-chips>
+                    </span>
                 </span>
             </p-fieldset>
         </span>
@@ -196,8 +193,6 @@
         <span class="p-fluid p-field">
             <input type="number" pInputText required formControlName="code" [placeholder]="'Код'" />
         </span>
-
-
 
         <span class="p-fluid p-field">
             <p-multiSelect appendTo="body" optionLabel="name.full" optionValue="_id" [filter]="true"
@@ -216,13 +211,13 @@
     [resizable]="true" [(visible)]="dialogStage.isCreateElementsGroup">
 
     <div [formGroup]="createElementsGroupForm">
-        <span class="p-fluid p-field">
-            <input type="text" pInputText required formControlName="label" [placeholder]="'Название групы'" />
+        <span formGroupName="label" class="p-fluid p-field">
+            <input type="text" pInputText required formControlName="inSystem" [placeholder]="'Название групы'" />
         </span>
 
         <span class="p-fluid p-field">
-            <p-treeSelect appendTo="body" [options]="elementGroups" formControlName="parentId"
-                placeholder="Родительская група"></p-treeSelect>
+            <p-treeSelect appendTo="body" optionLabel="label.inSystem" [options]="elementGroups"
+                formControlName="parentId" placeholder="Родительская група"></p-treeSelect>
         </span>
     </div>
 

@@ -12,7 +12,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { TreeTableModule } from 'primeng/treetable';
 import { FieldsetModule } from 'primeng/fieldset';
-
+import { ChipsModule } from 'primeng/chips';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     MultiSelectModule,
     ResponsiblesPipeModule,
     FormsModule,
-    FieldsetModule
+    FieldsetModule,
+    ChipsModule
   ],
   exports: [
     CounterpartiesComponent

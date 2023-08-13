@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AccSystemService, AccCompaniesService, AccDialogService } from 'ng-accounting';
+import { AccSystemService, AccCompaniesService, AccDialogService, convertArrayToTree } from 'ng-accounting';
+import { Dropdown } from 'primeng/dropdown';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -8,12 +9,12 @@ import { Subscription } from 'rxjs';
   templateUrl: './counterparties.component.html',
   styleUrls: ['./counterparties.component.scss']
 })
-export class CounterpartiesComponent  implements OnInit {
+export class CounterpartiesComponent implements OnInit {
   constructor(private readonly accSystemService: AccSystemService, private readonly accCompaniesService: AccCompaniesService, public readonly accDialogService: AccDialogService) { }
 
   dialogStage: any = {
     isCreateElement: false,
-    isCreateElementGroup: false
+    isCreateElementsGroup: false
   }
   responsibles: any[] = []
   elementGroups: any[] = []
@@ -49,38 +50,85 @@ export class CounterpartiesComponent  implements OnInit {
   subscription: Subscription = new Subscription()
 
   createElementForm: FormGroup = new FormGroup({
-    label: new FormControl(null),
+    label: new FormGroup({
+      inDocs: new FormControl(null),
+      inSystem: new FormControl(null)
+    }),
     code: new FormControl(null),
     parentId: new FormControl(null),
-    type: new FormControl(null),
     description: new FormControl(null),
-    responsibles: new FormControl(null),
-    children: new FormControl([])
+    responsibles: new FormControl([]),
+    country: new FormControl(null),
+    children: new FormControl([]),
+    tax: new FormGroup({
+      number: new FormControl(null)
+    }),
+    tin: new FormControl(null),
+    cor: new FormControl(null),
+    registerNumber: new FormControl(null),
+    bankAccount: new FormGroup({
+      bank: new FormControl(null),
+      number: new FormControl(null)
+    }),
+    addresses: new FormGroup({
+      legal: new FormControl(null),
+      actual: new FormControl(null),
+      post: new FormControl(null)
+    }),
+    contacts: new FormGroup({
+      emails: new FormControl([]),
+      phones: new FormControl([])
+    }),
+    contactPerson: new FormGroup({
+      addresses: new FormGroup({
+        legal: new FormControl(null),
+        actual: new FormControl(null),
+        post: new FormControl(null)
+      }),
+      contacts: new FormGroup({
+        emails: new FormControl([]),
+        phones: new FormControl([])
+      })
+    })
   })
 
   createElementsGroupForm: FormGroup = new FormGroup({
-    label: new FormControl(null),
+    label: new FormGroup({
+      inSystem: new FormControl(null)
+    }),
     parentId: new FormControl(null),
     isGroup: new FormControl(true),
     children: new FormControl([])
   })
 
   ngOnInit(): void {
+    this.init()
     this.responsibles = this.accSystemService.users
   }
 
   init() {
     this.currentCompany = this.accSystemService.currentCompany
+    this.elementsDataTable = convertArrayToTree(this.currentCompany.datasets.counterparties, { isWrapedInData: true })
+    this.elementGroups = convertArrayToTree(this.currentCompany.datasets.counterparties.filter((c: any) => c.isGroup)).map((c: any) => {
+      return {
+        ...c,
+        label: c.label.inSystem
+      }
+    })
   }
 
-  createElement(reInit: boolean = true) {
+  createElement(isGroup: boolean = false) {
+    const data = isGroup ? this.createElementsGroupForm.value : this.createElementForm.value
+    data.parentId = data.parentId?._id
 
+    this.currentCompany.datasets.counterparties.push(data)
+    this.updateCompany(isGroup)
+    this.dialogStage.isCreateElement = false
+    this.dialogStage.isCreateElementsGroup = false
   }
 
   onEdit(data: any, element: any, field: string) {
     clearTimeout(this.editTimeout)
-    console.log(element);
-
 
     this.editTimeout = setTimeout(() => {
       switch (field) {
@@ -105,10 +153,10 @@ export class CounterpartiesComponent  implements OnInit {
       }
 
 
-      const index = this.currentCompany.datasets.counterpaties.findIndex((w: any) => w._id === element._id)
+      const index = this.currentCompany.datasets.counterparties.findIndex((w: any) => w._id === element._id)
 
       if (index !== -1) {
-        this.currentCompany.datasets.counterpaties[index][field] = data
+        this.currentCompany.datasets.counterparties[index][field] = data
         this.updateCompany(false)
       }
     }, 600)

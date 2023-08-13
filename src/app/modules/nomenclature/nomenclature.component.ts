@@ -15,23 +15,6 @@ export class NomenclatureComponent implements OnInit {
     isCreateNumenclature: false
   }
 
-  data = [
-    {
-      _id: 1,
-      label: 'Nomenclature 1',
-      data: '123',
-      parentId: null,
-      children: []
-    },
-    {
-      _id: 2,
-      label: 'Nomenclature 2',
-      data: '42342',
-      parentId: 1,
-      children: []
-    }
-  ]
-
   nomenclaturesDataTable: any[] = []
   nomenclatures: any[] = []
   currentCompany!: any
