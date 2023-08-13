@@ -4,6 +4,7 @@ import { InitialMenuComponent } from 'ng-accounting';
 import { NomenclatureComponent } from './modules/nomenclature/nomenclature.component';
 import { WarehousesComponent } from './modules/warehouses/warehouses.component';
 import { CounterpartiesComponent } from './modules/counterparties/counterparties.component';
+import { CurrenciesComponent } from './modules/currencies/currencies.component';
 
 const routes: Routes = [
   {
@@ -22,14 +23,6 @@ const routes: Routes = [
             {
               label: 'Склади',
               link: 'warehouses'
-            },
-            {
-              label: 'Класифікатор одиниць виміру',
-              link: 'user-departments'
-            },
-            {
-              label: 'Склади',
-              link: 'user-departments'
             }
           ]
         },
@@ -41,12 +34,8 @@ const routes: Routes = [
               link: 'counterparties'
             },
             {
-              label: 'Договори',
-              link: 'user-departments'
-            },
-            {
               label: 'Валюти',
-              link: 'user-departments'
+              link: 'currencies'
             }
           ]
         }
@@ -64,6 +53,10 @@ const routes: Routes = [
   {
     path: 'counterparties',
     component: CounterpartiesComponent
+  },
+  {
+    path: 'currencies',
+    component: CurrenciesComponent
   }
 ]
 

@@ -8,6 +8,7 @@ import { NomenclatureModule } from './modules/nomenclature/nomenclature.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WarehousesModule } from './modules/warehouses/warehouses.module';
 import { CounterpartiesModule } from './modules/counterparties/counterparties.module';
+import { CurrenciesModule } from './modules/currencies/currencies.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CounterpartiesModule } from './modules/counterparties/counterparties.mo
     NomenclatureModule,
     BrowserAnimationsModule,
     WarehousesModule,
+    CurrenciesModule,
     CounterpartiesModule,
     NgAccountingModule.forRoot({
       api: {

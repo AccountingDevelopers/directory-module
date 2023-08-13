@@ -1,0 +1,66 @@
+<div class="module">
+    <lib-module-header [header]="'Валюти'">
+        <ng-template templateRef="headerToolbar">
+            <p-button icon="pi pi-plus" [label]="'Створити'" (onClick)="dialogStage.isCreateElement = true"></p-button>
+        </ng-template>
+    </lib-module-header>
+
+    <div class="content">
+        <p-table [value]="elementsDataTable" [scrollable]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Наименование валюты</th>
+                    <th>Цифр. код</th>
+                    <th>Симв. код</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr>
+                    <td>
+                        <span class="p-field p-fluid">
+                            <input pInputText [placeholder]="'Наименование в программе'" [(ngModel)]="rowData.label"
+                                (ngModelChange)="onEdit($event, rowData, 'label')">
+                        </span>
+                    </td>
+                    <td>
+                        <span class="p-field p-fluid">
+                            <input pInputText [placeholder]="'Цифр. код'" [(ngModel)]="rowData.codes.digital"
+                                (ngModelChange)="onEdit($event, rowData, 'codes.digital')">
+                        </span>
+                    </td>
+                    <td>
+                        <span class="p-field p-fluid">
+                            <input pInputText [placeholder]="'Симв. код'" [(ngModel)]="rowData.codes.symbolic"
+                                (ngModelChange)="onEdit($event, rowData, 'codes.symbolic')">
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="'Добавить валюту'" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [(visible)]="dialogStage.isCreateElement">
+
+    <div [formGroup]="createElementForm">
+        <span class="p-fluid p-field">
+            <input type="text" pInputText required formControlName="label" [placeholder]="'Наименование валюты'" />
+        </span>
+
+        <span formGroupName="codes">
+            <span class="p-fluid p-field">
+                <input type="number" pInputText required formControlName="digital" [placeholder]="'Цифровой код'" />
+            </span>
+
+            <span class="p-fluid p-field">
+                <input type="text" pInputText required formControlName="symbolic" [placeholder]="'Символьный код'" />
+            </span>
+        </span>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" [label]="'Создать'" styleClass="p-button-text"
+            (onClick)="createElement()"></p-button>
+    </ng-template>
+</p-dialog>

@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { NomenclatureComponent } from './nomenclature.component';
 import { ModuleHeaderModule } from 'ng-accounting';
 import { ButtonModule } from 'primeng/button'
-import { TreeTableModule } from 'primeng/treetable';
 import { DialogModule } from 'primeng/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TreeSelectModule } from 'primeng/treeselect';
+import { TreeTableModule } from 'ng-accounting'
 
 @NgModule({
   declarations: [
@@ -18,12 +18,12 @@ import { TreeSelectModule } from 'primeng/treeselect';
     CommonModule,
     ModuleHeaderModule,
     ButtonModule,
-    TreeTableModule,
     DialogModule,
     ReactiveFormsModule,
     InputTextModule,
     InputTextareaModule,
-    TreeSelectModule
+    TreeSelectModule,
+    TreeTableModule
   ],
   exports: [
     NomenclatureComponent
