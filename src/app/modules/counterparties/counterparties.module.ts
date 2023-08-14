@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CounterpartiesComponent } from './counterparties.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ModuleHeaderModule, ResponsiblesPipeModule } from 'ng-accounting';
+import { ModuleHeaderModule, AccTableModule } from 'ng-accounting';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -30,10 +30,10 @@ import { ChipsModule } from 'primeng/chips';
     TreeSelectModule,
     DropdownModule,
     MultiSelectModule,
-    ResponsiblesPipeModule,
     FormsModule,
     FieldsetModule,
-    ChipsModule
+    ChipsModule,
+    AccTableModule
   ],
   exports: [
     CounterpartiesComponent

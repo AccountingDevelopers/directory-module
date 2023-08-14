@@ -1,6 +1,6 @@
 import { FormGroup, FormControl } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
-import { AccSystemService, AccCompaniesService, AccDialogService, convertArrayToTree } from 'ng-accounting';
+import { AccSystemService, AccCompaniesService, AccDialogService } from 'ng-accounting';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -9,7 +9,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./currencies.component.scss']
 })
 export class CurrenciesComponent implements OnInit {
-  constructor(private readonly accSystemService: AccSystemService, private readonly accCompaniesService: AccCompaniesService, public readonly accDialogService: AccDialogService) { }
+  constructor(
+    private readonly accSystemService: AccSystemService,
+    private readonly accCompaniesService: AccCompaniesService,
+    public readonly accDialogService: AccDialogService
+  ) { }
 
   dialogStage: any = {
     isCreateElement: false,
@@ -17,6 +21,10 @@ export class CurrenciesComponent implements OnInit {
   }
   editTimeout!: any
   elementsDataTable: any[] = []
+
+  elements: any[] = []
+  fields: any[] = []
+
   subscription: Subscription = new Subscription()
   currentCompany!: any
   createElementForm: FormGroup = new FormGroup({
@@ -33,14 +41,17 @@ export class CurrenciesComponent implements OnInit {
 
   init() {
     this.currentCompany = this.accSystemService.currentCompany
-    this.elementsDataTable = this.currentCompany.datasets.currencies
-    console.log(this.currentCompany.datasets.currencies);
-    
+
+    this.elements = this.currentCompany.datasets.currencies.elements
+    this.fields = this.currentCompany.datasets.currencies.fields
+    // this.elementsDataTable = this.currentCompany.datasets.currencies
+    // console.log(this.currentCompany.datasets.currencies);
+
   }
 
   onEdit(data: any, element: any, field: string) {
     console.log(data);
-    
+
     clearTimeout(this.editTimeout)
 
     this.editTimeout = setTimeout(() => {
@@ -51,10 +62,10 @@ export class CurrenciesComponent implements OnInit {
         element[field] = data
       }
 
-      const index = this.currentCompany.datasets.currencies.findIndex((w: any) => w._id === element._id)
+      const index = this.currentCompany.datasets.currencies.elements.findIndex((w: any) => w._id === element._id)
 
       if (index !== -1) {
-        this.currentCompany.datasets.currencies[index][field] = data
+        this.currentCompany.datasets.currencies.elements[index][field] = data
         this.updateCompany(false)
       }
     }, 600)
@@ -62,7 +73,7 @@ export class CurrenciesComponent implements OnInit {
 
   createElement() {
     const data = this.createElementForm.value
-    this.currentCompany.datasets.currencies.push(data)
+    this.currentCompany.datasets.currencies.elements.push(data)
     this.updateCompany()
     this.dialogStage.isCreateElement = false
   }

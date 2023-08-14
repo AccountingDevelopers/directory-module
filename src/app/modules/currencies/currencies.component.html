@@ -6,7 +6,17 @@
     </lib-module-header>
 
     <div class="content">
-        <p-table [value]="elementsDataTable" [scrollable]="true">
+        <lib-table [config]="{
+            mode: 'default',
+            module: {
+                type: 'datasets',
+                identifier: 'currencies',
+                internalEvents: true
+            },
+            data: elements, 
+            fields: fields
+        }"></lib-table>
+        <!-- <p-table [value]="elementsDataTable" [scrollable]="true">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Наименование валюты</th>
@@ -36,7 +46,7 @@
                     </td>
                 </tr>
             </ng-template>
-        </p-table>
+        </p-table> -->
     </div>
 </div>
 

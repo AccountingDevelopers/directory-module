@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AccSystemService, AccCompaniesService, convertArrayToTree } from 'ng-accounting';
+import { AccSystemService, AccCompaniesService, convertArrayToTree, WAREHOUSE_TYPES } from 'ng-accounting';
 import { Subscription } from 'rxjs';
+import { AccTableService } from 'ng-accounting'
 
 @Component({
   selector: 'app-warehouses',
@@ -9,35 +10,27 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./warehouses.component.scss']
 })
 export class WarehousesComponent {
-  constructor(private readonly accSystemService: AccSystemService, private readonly accCompaniesService: AccCompaniesService) { }
+  constructor(
+    public readonly accSystemService: AccSystemService,
+    private readonly accCompaniesService: AccCompaniesService,
+    private readonly accTableService: AccTableService
+  ) { }
 
   dialogStage: any = {
-    isCreateWarehouse: false,
-    isCreateWarehousesGroup: false
+    isCreateElement: false,
+    isCreateElementsGroup: false
   }
 
+  loadingConfig: any = {
+    isLoadingContent: false
+  }
+
+  elements: any[] = []
+  fields: any[] = []
+  elementsGroups: any[] = []
   currentCompany!: any
   subscription: Subscription = new Subscription()
-  editTimeout!: any
-  warehousesDataTable: any[] = []
-  warehouses: any[] = []
-  warehouseGroups: any[] = []
-  responsibles: any[] = []
-
-  warehouseTypes: any[] = [
-    {
-      label: 'Оптовый склад',
-      value: 'warehouse'
-    },
-    {
-      label: 'Розничный магазин',
-      value: 'retailStore'
-    },
-    {
-      label: 'Неавтоматизированная торговая точка',
-      value: 'nonAutomatedOutlet'
-    }
-  ]
+  elementsTypes: any[] = WAREHOUSE_TYPES
 
   createWarehouseForm: FormGroup = new FormGroup({
     label: new FormControl(null),
@@ -45,7 +38,7 @@ export class WarehousesComponent {
     parentId: new FormControl(null),
     type: new FormControl(null),
     description: new FormControl(null),
-    responsibles: new FormControl(null),
+    responsibles: new FormControl([]),
     children: new FormControl([])
   })
 
@@ -57,72 +50,52 @@ export class WarehousesComponent {
   })
 
   ngOnInit(): void {
+    this.currentCompany = this.accSystemService.currentCompany
     this.init()
-    this.responsibles = this.accSystemService.users
   }
 
   init() {
-    this.currentCompany = this.accSystemService.currentCompany
-    this.warehousesDataTable = convertArrayToTree(this.currentCompany.datasets.warehouses, { isWrapedInData: true })
-    this.warehouseGroups = convertArrayToTree(this.currentCompany.datasets.warehouses.filter((w: any) => w.isGroup))
+    this.elements = this.currentCompany.datasets.warehouses.elements
+    this.elementsGroups = convertArrayToTree(this.elements.filter((e: any) => e.isGroup))
+    this.fields = this.currentCompany.datasets.warehouses.fields
+    this.loadingConfig.isLoadingContent = false
   }
 
-  createWarehouse(isGroup: boolean = false) {
+  createElement(isGroup: boolean = false) {
     let data: any = {}
 
     if (isGroup) {
       data = this.createWarehouseGroupForm.value
     } else {
       data = this.createWarehouseForm.value
+      data.responsibles = data.responsibles.map((r: any) => {
+        return {
+          ref: r
+        }
+      })
     }
 
     data.parentId = data.parentId?._id
-    data.responsibles = data.responsibles.map((r: any) => {
-      return {
-        ref: r
-      }
-    })
 
-    this.currentCompany.datasets.warehouses.push(data)
+    this.currentCompany.datasets.warehouses.elements.push(data)
     this.updateCompany()
-    this.dialogStage.isCreateWarehouse = false
-    this.dialogStage.isCreateWarehousesGroup = false
+    this.closeDialogs()
   }
 
-  onEdit(data: any, element: any, field: string) {
-    clearTimeout(this.editTimeout)
-    console.log(element);
-
-
-    this.editTimeout = setTimeout(() => {
-      switch (field) {
-        case 'responsibles': {
-          data = data.map((r: any) => {
-            return {
-              ref: r._id
-            }
-          })
-
-          break
-        }
-      }
-
-
-      const index = this.currentCompany.datasets.warehouses.findIndex((w: any) => w._id === element._id)
-
-      if (index !== -1) {
-        this.currentCompany.datasets.warehouses[index][field] = data
-        this.updateCompany(false)
-      }
-    }, 600)
+  closeDialogs() {
+    this.dialogStage.isCreateElement = false
+    this.dialogStage.isCreateElementsGroup = false
   }
 
-  updateCompany(reInit: boolean = true) {
+  updateCompany() {
+    this.loadingConfig.isLoadingContent = true
     this.subscription.add(this.accCompaniesService.update(this.currentCompany).subscribe({
-      next: () => {
-        if (reInit) {
-          this.init()
-        }
+      next: ({ company }) => {
+        this.currentCompany = company
+        this.accTableService.emit('reloadTable', {
+          elements: company.datasets.warehouses.elements
+        })
+        this.init()
       }
     }))
   }

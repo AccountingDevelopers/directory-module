@@ -1,16 +1,26 @@
 <div class="module">
     <lib-module-header [header]="'Склади'">
         <ng-template templateRef="headerToolbar">
-            <p-button icon="pi pi-plus" [label]="'Створити'"
-                (onClick)="dialogStage.isCreateWarehouse = true"></p-button>
+            <p-button icon="pi pi-plus" [label]="'Створити'" (onClick)="dialogStage.isCreateElement = true"></p-button>
 
             <p-button icon="pi pi-plus" [label]="'Створити групу'"
-                (onClick)="dialogStage.isCreateWarehousesGroup = true"></p-button>
+                (onClick)="dialogStage.isCreateElementsGroup = true"></p-button>
         </ng-template>
     </lib-module-header>
 
     <div class="content">
-        <p-treeTable [value]="warehousesDataTable" [scrollable]="true">
+        <lib-table [config]="{
+            mode: 'tree',
+            module: {
+                type: 'datasets',
+                identifier: 'warehouses',
+                internalEvents: true
+            },
+            data: elements, 
+            fields: fields
+        }"></lib-table>
+
+        <!-- <p-treeTable [value]="warehousesDataTable" [scrollable]="true">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Найменування</th>
@@ -58,12 +68,12 @@
                     </td>
                 </tr>
             </ng-template>
-        </p-treeTable>
+        </p-treeTable> -->
     </div>
 </div>
 
 <p-dialog [header]="'Создать склад'" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
-    [resizable]="true" [(visible)]="dialogStage.isCreateWarehouse">
+    [resizable]="true" [(visible)]="dialogStage.isCreateElement">
 
     <div [formGroup]="createWarehouseForm">
         <span class="p-fluid p-field">
@@ -76,7 +86,7 @@
 
         <span class="p-fluid p-field">
             <p-dropdown appendTo="body" optionValue="value" formControlName="type" [placeholder]="'Тип склада'"
-                [options]="warehouseTypes"></p-dropdown>
+                [options]="elementsTypes"></p-dropdown>
         </span>
 
         <span class="p-fluid p-field">
@@ -84,25 +94,25 @@
         </span>
 
         <span class="p-fluid p-field">
-            <p-treeSelect appendTo="body" [options]="warehouseGroups" formControlName="parentId"
-                placeholder="Родительская нуменклатура"></p-treeSelect>
+            <p-treeSelect appendTo="body" [options]="elementsGroups" formControlName="parentId"
+                placeholder="Родительская група"></p-treeSelect>
         </span>
 
         <span class="p-fluid p-field">
             <p-multiSelect appendTo="body" optionLabel="name.full" optionValue="_id" [filter]="true"
-                [filterBy]="'name.full'" [options]="responsibles" formControlName="responsibles"
+                [filterBy]="'name.full'" [options]="accSystemService.users" formControlName="responsibles"
                 placeholder="Ответственные"></p-multiSelect>
         </span>
     </div>
 
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" [label]="'Создать'" styleClass="p-button-text"
-            (onClick)="createWarehouse()"></p-button>
+            (onClick)="createElement()"></p-button>
     </ng-template>
 </p-dialog>
 
 <p-dialog [header]="'Создать групу'" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
-    [resizable]="true" [(visible)]="dialogStage.isCreateWarehousesGroup">
+    [resizable]="true" [(visible)]="dialogStage.isCreateElementsGroup">
 
     <div [formGroup]="createWarehouseGroupForm">
         <span class="p-fluid p-field">
@@ -110,13 +120,13 @@
         </span>
 
         <span class="p-fluid p-field">
-            <p-treeSelect appendTo="body" [options]="warehouseGroups" formControlName="parentId"
+            <p-treeSelect appendTo="body" [options]="elementsGroups" formControlName="parentId"
                 placeholder="Родительская група"></p-treeSelect>
         </span>
     </div>
 
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" [label]="'Создать'" styleClass="p-button-text"
-            (onClick)="createWarehouse(true)"></p-button>
+            (onClick)="createElement(true)"></p-button>
     </ng-template>
 </p-dialog>

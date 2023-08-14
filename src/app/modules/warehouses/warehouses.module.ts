@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WarehousesComponent } from './warehouses.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModuleHeaderModule, ResponsiblesPipeModule } from 'ng-accounting';
+import { AccTableModule, ModuleHeaderModule, ResponsiblesPipeModule } from 'ng-accounting';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -29,7 +29,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     DropdownModule,
     MultiSelectModule,
     ResponsiblesPipeModule,
-    FormsModule
+    FormsModule,
+    AccTableModule
   ],
   exports: [WarehousesComponent]
 })

@@ -9,7 +9,18 @@
     </lib-module-header>
 
     <div class="content">
-        <p-treeTable [value]="elementsDataTable" [scrollable]="true">
+        <lib-table [config]="{
+            mode: 'tree',
+            module: {
+                type: 'datasets',
+                identifier: 'counterparties',
+                internalEvents: true
+            },
+            data: elements, 
+            fields: fields
+        }"></lib-table>
+
+        <!-- <p-treeTable [value]="elementsDataTable" [scrollable]="true">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Наименование в программе</th>
@@ -59,7 +70,7 @@
                     </ng-template>
                 </tr>
             </ng-template>
-        </p-treeTable>
+        </p-treeTable> -->
     </div>
 </div>
 
@@ -69,14 +80,8 @@
     <div [formGroup]="createElementForm">
         <div class="fields__wrapper">
             <div class="fields__wrapper--box">
-                <span formGroupName="label" class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="inDocs"
-                        [placeholder]="'Название для документов'" />
-                </span>
-
-                <span formGroupName="label" class="p-fluid p-field">
-                    <input type="text" pInputText required formControlName="inSystem"
-                        [placeholder]="'Название в програме'" />
+                <span class="p-fluid p-field">
+                    <input type="text" pInputText required formControlName="label" [placeholder]="'Название'" />
                 </span>
 
                 <span class="p-fluid p-field">
@@ -196,7 +201,7 @@
 
         <span class="p-fluid p-field">
             <p-multiSelect appendTo="body" optionLabel="name.full" optionValue="_id" [filter]="true"
-                [filterBy]="'name.full'" [options]="responsibles" formControlName="responsibles"
+                [filterBy]="'name.full'" [options]="accSystemService.users" formControlName="responsibles"
                 placeholder="Ответственные"></p-multiSelect>
         </span>
     </div>
@@ -211,8 +216,8 @@
     [resizable]="true" [(visible)]="dialogStage.isCreateElementsGroup">
 
     <div [formGroup]="createElementsGroupForm">
-        <span formGroupName="label" class="p-fluid p-field">
-            <input type="text" pInputText required formControlName="inSystem" [placeholder]="'Название групы'" />
+        <span class="p-fluid p-field">
+            <input type="text" pInputText required formControlName="label" [placeholder]="'Название групы'" />
         </span>
 
         <span class="p-fluid p-field">

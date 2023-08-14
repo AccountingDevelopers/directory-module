@@ -45,7 +45,7 @@ export class NomenclatureComponent implements OnInit {
   init() {
     this.currentCompany = this.accSystemService.currentCompany
     this.elements = this.currentCompany.datasets.nomenclatures.elements
-    this.elementsGroups = this.elements.filter((e: any) => e.isGroup)
+    this.elementsGroups = convertArrayToTree(this.elements.filter((e: any) => e.isGroup))
     this.fields = this.currentCompany.datasets.nomenclatures.fields
   }
 
@@ -61,9 +61,5 @@ export class NomenclatureComponent implements OnInit {
         this.dialogStage.isCreateElementsGroup = false
       }
     }))
-  }
-
-  updateElement(response: {element: any, field: any}) {
-
   }
 }

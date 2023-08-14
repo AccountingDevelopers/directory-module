@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AccSystemService, AccCompaniesService, AccDialogService, convertArrayToTree } from 'ng-accounting';
+import { AccSystemService, AccCompaniesService, AccDialogService, convertArrayToTree, COUNTERPARTY_TYPES, AccTableService } from 'ng-accounting';
 import { Dropdown } from 'primeng/dropdown';
 import { Subscription } from 'rxjs';
 
@@ -10,50 +10,26 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./counterparties.component.scss']
 })
 export class CounterpartiesComponent implements OnInit {
-  constructor(private readonly accSystemService: AccSystemService, private readonly accCompaniesService: AccCompaniesService, public readonly accDialogService: AccDialogService) { }
+  constructor(public readonly accSystemService: AccSystemService, private readonly accCompaniesService: AccCompaniesService, public readonly accDialogService: AccDialogService,
+    private readonly accTableService: AccTableService) { }
 
   dialogStage: any = {
     isCreateElement: false,
     isCreateElementsGroup: false
   }
-  responsibles: any[] = []
-  elementGroups: any[] = []
+
   elementsDataTable: any[] = []
-  elementTypes: any[] = [
-    {
-      label: 'Юридическое лицо',
-      value: 'warehouse'
-    },
-    {
-      label: 'Индивидуальный предприниматель',
-      value: 'retailStore'
-    },
-    {
-      label: 'Физическое лицо',
-      value: 'nonAutomatedOutlet'
-    },
-    {
-      label: 'Самозанятый',
-      value: 'nonAutomatedOutlet'
-    },
-    {
-      label: 'Обособленное подразделение',
-      value: 'nonAutomatedOutlet'
-    },
-    {
-      label: 'Государственный орган',
-      value: 'nonAutomatedOutlet'
-    }
-  ]
+  elementTypes: any[] = COUNTERPARTY_TYPES
   editTimeout!: any
   currentCompany!: any
   subscription: Subscription = new Subscription()
 
+  elements: any[] = []
+  elementGroups: any[] = []
+  fields: any[] = []
+
   createElementForm: FormGroup = new FormGroup({
-    label: new FormGroup({
-      inDocs: new FormControl(null),
-      inSystem: new FormControl(null)
-    }),
+    label: new FormControl(null),
     code: new FormControl(null),
     parentId: new FormControl(null),
     description: new FormControl(null),
@@ -93,81 +69,57 @@ export class CounterpartiesComponent implements OnInit {
   })
 
   createElementsGroupForm: FormGroup = new FormGroup({
-    label: new FormGroup({
-      inSystem: new FormControl(null)
-    }),
+    label: new FormControl(null),
     parentId: new FormControl(null),
     isGroup: new FormControl(true),
     children: new FormControl([])
   })
 
   ngOnInit(): void {
+    this.currentCompany = this.accSystemService.currentCompany
     this.init()
-    this.responsibles = this.accSystemService.users
   }
 
   init() {
-    this.currentCompany = this.accSystemService.currentCompany
-    this.elementsDataTable = convertArrayToTree(this.currentCompany.datasets.counterparties, { isWrapedInData: true })
-    this.elementGroups = convertArrayToTree(this.currentCompany.datasets.counterparties.filter((c: any) => c.isGroup)).map((c: any) => {
-      return {
-        ...c,
-        label: c.label.inSystem
-      }
-    })
+    this.elements = this.currentCompany.datasets.counterparties.elements
+    this.elementGroups = convertArrayToTree(this.elements.filter((e: any) => e.isGroup))
+    this.fields = this.currentCompany.datasets.counterparties.fields
   }
 
   createElement(isGroup: boolean = false) {
-    const data = isGroup ? this.createElementsGroupForm.value : this.createElementForm.value
+    let data: any = {}
+
+    if (isGroup) {
+      data = this.createElementsGroupForm.value
+    } else {
+      data = this.createElementForm.value
+      data.responsibles = data.responsibles.map((r: any) => {
+        return {
+          ref: r
+        }
+      })
+    }
+
     data.parentId = data.parentId?._id
 
-    this.currentCompany.datasets.counterparties.push(data)
+    this.currentCompany.datasets.counterparties.elements.push(data)
     this.updateCompany(isGroup)
+    this.closeDialogs()
+  }
+
+  closeDialogs() {
     this.dialogStage.isCreateElement = false
     this.dialogStage.isCreateElementsGroup = false
   }
 
-  onEdit(data: any, element: any, field: string) {
-    clearTimeout(this.editTimeout)
-
-    this.editTimeout = setTimeout(() => {
-      switch (field) {
-        case 'responsibles': {
-          data = data.map((r: any) => {
-            return {
-              ref: r._id
-            }
-          })
-
-          break
-        }
-        case 'label': {
-          const splitedField = field.split('.')
-          data = {
-            [splitedField[0]]: data,
-            ...element.label
-          }
-
-          break
-        }
-      }
-
-
-      const index = this.currentCompany.datasets.counterparties.findIndex((w: any) => w._id === element._id)
-
-      if (index !== -1) {
-        this.currentCompany.datasets.counterparties[index][field] = data
-        this.updateCompany(false)
-      }
-    }, 600)
-  }
-
   updateCompany(reInit: boolean = true) {
     this.subscription.add(this.accCompaniesService.update(this.currentCompany).subscribe({
-      next: () => {
-        if (reInit) {
-          this.init()
-        }
+      next: ({ company }) => {
+        this.currentCompany = company
+        this.accTableService.emit('reloadTable', {
+          elements: company.datasets.counterparties.elements
+        })
+        this.init()
       }
     }))
   }

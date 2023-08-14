@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CurrenciesComponent } from './currencies.component';
-import { ModuleHeaderModule, ResponsiblesPipeModule } from 'ng-accounting';
+import { ModuleHeaderModule, ResponsiblesPipeModule, AccTableModule } from 'ng-accounting';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -30,7 +30,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MultiSelectModule,
     ResponsiblesPipeModule,
     FormsModule,
-    TableModule
+    TableModule,
+    AccTableModule
   ]
 })
 export class CurrenciesModule { }

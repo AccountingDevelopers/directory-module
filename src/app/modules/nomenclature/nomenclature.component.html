@@ -8,41 +8,16 @@
     </lib-module-header>
 
     <div class="content">
-        <lib-tree-table [config]="{
+        <lib-table [config]="{
+            mode: 'tree',
             module: {
                 type: 'datasets',
-                identifier: 'nomenclatures'
+                identifier: 'nomenclatures',
+                internalEvents: true
             },
             data: elements, 
             fields: fields
-        }" (updateElement)="updateElement($event)"></lib-tree-table>
-        <!-- <p-treeTable [value]="nomenclaturesDataTable" [scrollable]="true">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Найменування</th>
-                    <th>Код</th>
-                    <th>Артикул</th>
-                    <th>Од.</th>
-                    <th>% ПДВ</th>
-                    <th>Код для ПН (по-умовч.)</th>
-                    <th>Коментар</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-                <tr [ttRow]="rowNode">
-                    <td>
-                        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-                        {{ rowData.label }}
-                    </td>
-                    <td>{{ rowData.code }}</td>
-                    <td>{{ rowData.article }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>{{ rowData.description }}</td>
-                </tr>
-            </ng-template>
-        </p-treeTable> -->
+        }"></lib-table>
     </div>
 </div>
 
