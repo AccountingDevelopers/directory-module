@@ -12,7 +12,7 @@ import { CurrenciesModule } from './modules/currencies/currencies.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,8 @@ export class CounterpartiesComponent implements OnInit {
   constructor(public readonly accSystemService: AccSystemService, private readonly accCompaniesService: AccCompaniesService, public readonly accDialogService: AccDialogService,
     private readonly accTableService: AccTableService) { }
 
+  moduleData!: any
+
   dialogStage: any = {
     isCreateElement: false,
     isCreateElementsGroup: false

@@ -44,7 +44,8 @@ const routes: Routes = [
   },
   {
     path: 'nomenclature',
-    component: NomenclatureComponent
+    loadChildren: () =>
+      import('./modules/nomenclature/nomenclature.module').then((m) => m.NomenclatureModule)
   },
   {
     path: 'warehouses',

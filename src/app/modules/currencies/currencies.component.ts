@@ -19,6 +19,7 @@ export class CurrenciesComponent implements OnInit {
     isCreateElement: false,
     isCreateElementsGroup: false
   }
+  moduleData!: any
   editTimeout!: any
   elementsDataTable: any[] = []
 

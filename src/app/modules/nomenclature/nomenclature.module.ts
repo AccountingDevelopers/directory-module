@@ -9,10 +9,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { AccTableModule } from 'ng-accounting'
+import { TabViewModule } from 'primeng/tabview';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { NomenclatureRoutingModule } from './nomenclature-routing.module';
+import { BasicComponent } from './basic/basic.component';
+import { TypesComponent } from './types/types.component';
+import { PriceTypesComponent } from './price-types/price-types.component';
+import { ElementFieldModule } from 'ng-accounting';
 
 @NgModule({
   declarations: [
-    NomenclatureComponent
+    NomenclatureComponent,
+    BasicComponent,
+    TypesComponent,
+    PriceTypesComponent
   ],
   imports: [
     CommonModule,
@@ -23,10 +33,16 @@ import { AccTableModule } from 'ng-accounting'
     InputTextModule,
     InputTextareaModule,
     TreeSelectModule,
-    AccTableModule
+    AccTableModule,
+    TabViewModule,
+    TabMenuModule,
+    NomenclatureRoutingModule,
+    ElementFieldModule
   ],
   exports: [
-    NomenclatureComponent
+    NomenclatureComponent,
+    BasicComponent,
+    TypesComponent
   ]
 })
 export class NomenclatureModule { }

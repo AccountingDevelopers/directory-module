@@ -16,6 +16,7 @@ export class WarehousesComponent {
     private readonly accTableService: AccTableService
   ) { }
 
+  moduleData!: any
   dialogStage: any = {
     isCreateElement: false,
     isCreateElementsGroup: false

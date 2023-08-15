@@ -10,12 +10,15 @@
             mode: 'default',
             module: {
                 type: 'datasets',
+                data: moduleData,
                 identifier: 'currencies',
                 internalEvents: true
             },
             data: elements, 
             fields: fields
         }"></lib-table>
+
+        
         <!-- <p-table [value]="elementsDataTable" [scrollable]="true">
             <ng-template pTemplate="header">
                 <tr>

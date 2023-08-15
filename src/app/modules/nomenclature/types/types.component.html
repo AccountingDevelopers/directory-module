@@ -1,0 +1,32 @@
+<div class="content">
+    <div class="content__controls">
+        <p-button icon="pi pi-plus" [label]="'Створити'" (onClick)="dialogStage.isCreateElement = true"></p-button>
+    </div>
+
+    <lib-table [config]="{
+        mode: 'default',
+        module: {
+            data: moduleData,
+            type: 'datasets',
+            identifier: 'nomenclatures.types',
+            internalEvents: true
+        },
+        data: moduleData.elements,  
+        fields: moduleData.fields
+    }"></lib-table>
+</div>
+
+<p-dialog [header]="'Создать вид номенклатуры'" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [(visible)]="dialogStage.isCreateElement">
+
+    <div [formGroup]="createElementForm">
+        <span class="p-fluid p-field">
+            <input type="text" pInputText required formControlName="label" [placeholder]="'Название вида'" />
+        </span>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" [label]="'Создать'" styleClass="p-button-text"
+            (onClick)="createElement()"></p-button>
+    </ng-template>
+</p-dialog>
