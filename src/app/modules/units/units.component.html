@@ -1,5 +1,5 @@
 <div class="module">
-    <lib-module-header [header]="'Валюти'">
+    <lib-module-header [header]="'Еденицы измерения'">
         <ng-template templateRef="headerToolbar">
             <p-button icon="pi pi-plus" [label]="'Створити'" (onClick)="dialogStage.isCreateElement = true"></p-button>
         </ng-template>
@@ -11,31 +11,29 @@
             module: {
                 type: 'datasets',
                 data: moduleData,
-                identifier: 'currencies',
+                identifier: 'units',
                 internalEvents: true
             },
-            data: elements, 
-            fields: fields
+            data: moduleData.elements, 
+            fields: moduleData.fields
         }"></lib-table>
     </div>
 </div>
 
-<p-dialog [header]="'Добавить валюту'" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
+<p-dialog header="Создать еденицу измерения" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
     [resizable]="true" [(visible)]="dialogStage.isCreateElement">
 
     <div [formGroup]="createElementForm">
         <span class="p-fluid p-field">
-            <input type="text" pInputText required formControlName="label" [placeholder]="'Наименование валюты'" />
+            <input type="text" pInputText required formControlName="label" [placeholder]="'Название'" />
         </span>
 
-        <span formGroupName="codes">
-            <span class="p-fluid p-field">
-                <input type="number" pInputText required formControlName="digital" [placeholder]="'Цифровой код'" />
-            </span>
+        <span class="p-fluid p-field">
+            <input type="text" pInputText required formControlName="symbol" [placeholder]="'Символ'" />
+        </span>
 
-            <span class="p-fluid p-field">
-                <input type="text" pInputText required formControlName="symbolic" [placeholder]="'Символьный код'" />
-            </span>
+        <span class="p-fluid p-field">
+            <input type="number" pInputText required formControlName="code" [placeholder]="'Код'" />
         </span>
     </div>
 

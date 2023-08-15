@@ -42,17 +42,11 @@ export class CurrenciesComponent implements OnInit {
 
   init() {
     this.currentCompany = this.accSystemService.currentCompany
-
     this.elements = this.currentCompany.datasets.currencies.elements
     this.fields = this.currentCompany.datasets.currencies.fields
-    // this.elementsDataTable = this.currentCompany.datasets.currencies
-    // console.log(this.currentCompany.datasets.currencies);
-
   }
 
   onEdit(data: any, element: any, field: string) {
-    console.log(data);
-
     clearTimeout(this.editTimeout)
 
     this.editTimeout = setTimeout(() => {

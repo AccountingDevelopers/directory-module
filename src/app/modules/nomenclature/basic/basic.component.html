@@ -40,13 +40,32 @@
         </span>
 
         <span class="p-fluid p-field">
-            <!-- <p-dropdown appendTo="body" [options]="currentCompany.datasets"></p-dropdown> -->
+            <lib-element-field formControlName="nomenclatureTypes" [config]="{
+                    selectOnly: true,
+                    isDefault: true
+                }" [field]="'nomenclatureTypes'"></lib-element-field>
+        </span>
+
+        <span class="p-fluid p-field">
             <lib-element-field [config]="{
                     selectOnly: true,
                     isDefault: true
-                }" [field]="{
-                    _id: 'nomenclatureTypes'
-                }"></lib-element-field>
+                }" [field]="'units'"></lib-element-field>
+        </span>
+        
+        <span class="p-fluid p-field">
+            <lib-element-field [config]="{
+                    selectOnly: true,
+                    isDefault: true
+                }" [field]="'vat'"></lib-element-field>
+        </span>
+
+        <span class="p-fluid p-field">
+            <lib-element-field [config]="{
+                    selectOnly: true,
+                    isDefault: true,
+                    hasLargeSelect: true
+                }" [field]="'counterpaties'"></lib-element-field>
         </span>
 
         <span class="p-fluid p-field">

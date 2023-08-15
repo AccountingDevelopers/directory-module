@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WarehousesModule } from './modules/warehouses/warehouses.module';
 import { CounterpartiesModule } from './modules/counterparties/counterparties.module';
 import { CurrenciesModule } from './modules/currencies/currencies.module';
+import { UnitsModule } from './modules/units/units.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CurrenciesModule } from './modules/currencies/currencies.module';
     BrowserAnimationsModule,
     WarehousesModule,
     CurrenciesModule,
+    UnitsModule,
     CounterpartiesModule,
     NgAccountingModule.forRoot({
       api: {

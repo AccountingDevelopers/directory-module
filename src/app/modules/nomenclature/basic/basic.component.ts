@@ -28,7 +28,8 @@ export class BasicComponent implements OnInit {
     article: new FormControl(null),
     description: new FormControl(null),
     children: new FormControl([]),
-    isGroup: new FormControl(false)
+    isGroup: new FormControl(false),
+    nomenclatureTypes: new FormControl(null)
   })
 
   createNomenclaturesGroupForm: FormGroup = new FormGroup({

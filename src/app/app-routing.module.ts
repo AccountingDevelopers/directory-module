@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InitialMenuComponent } from 'ng-accounting';
-import { NomenclatureComponent } from './modules/nomenclature/nomenclature.component';
 import { WarehousesComponent } from './modules/warehouses/warehouses.component';
 import { CounterpartiesComponent } from './modules/counterparties/counterparties.component';
 import { CurrenciesComponent } from './modules/currencies/currencies.component';
+import { UnitsComponent } from './modules/units/units.component';
 
 const routes: Routes = [
   {
@@ -36,6 +36,10 @@ const routes: Routes = [
             {
               label: 'Валюти',
               link: 'currencies'
+            },
+            {
+              label: 'Еденицы измерения',
+              link: 'units'
             }
           ]
         }
@@ -58,6 +62,10 @@ const routes: Routes = [
   {
     path: 'currencies',
     component: CurrenciesComponent
+  },
+  {
+    path: 'units',
+    component: UnitsComponent
   }
 ]
 
