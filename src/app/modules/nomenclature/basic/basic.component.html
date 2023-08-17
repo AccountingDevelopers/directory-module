@@ -8,21 +8,17 @@
     <lib-table [config]="{
         mode: 'tree',
         module: {
-            data: moduleData,
-            type: 'datasets',
-            identifier: 'nomenclatures.basic',
+            identifier: 'nomenclatures',
+            type: 'basic',
             internalEvents: true
-        },
-        data: moduleData.elements,  
-        fields: moduleData.fields
+        }
     }"></lib-table>
 </div>
-
 
 <p-dialog header="Создать номенклатуру" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
     [resizable]="true" [(visible)]="dialogStage.isCreateElement">
 
-    <div [formGroup]="createNomenclaturesForm">
+    <div [formGroup]="createElementForm">
         <span class="p-fluid p-field">
             <input type="text" pInputText required formControlName="label" [placeholder]="'Название нуменклатуры'" />
         </span>
@@ -83,7 +79,7 @@
 <p-dialog [header]="'Создать групу'" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
     [resizable]="true" [(visible)]="dialogStage.isCreateElementsGroup">
 
-    <div [formGroup]="createNomenclaturesGroupForm">
+    <div [formGroup]="createElementsGroupForm">
         <span class="p-fluid p-field">
             <input type="text" pInputText required formControlName="label" [placeholder]="'Название групы'" />
         </span>

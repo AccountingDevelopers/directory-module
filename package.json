@@ -2,8 +2,8 @@
   "name": "initial-angular-module",
   "version": "0.0.0",
   "scripts": {
-    "start": "accounting -t eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGFlZGY2YmRmMWRhOTkwZWI0MmI1YjQiLCJjb21wYW55SWQiOiI2NGQ3OWZlMWVjYzEyOGZmOTZkM2FjYTAiLCJ3b3Jrc3BhY2VOYW1lIjoiam91cm5leSIsImlhdCI6MTY5MTg1NjM0OSwiZXhwIjoxNzE3Nzc2MzQ5fQ.DuFnyueBeB2PB8r61TN8N2KYDwJCbGl6Z4xbqHq5J9g -m settings -p dist/settings-module --watch true --build angular",
-    "build": "accounting -t eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGFlZGY2YmRmMWRhOTkwZWI0MmI1YjQiLCJjb21wYW55SWQiOiI2NGQ3OWZlMWVjYzEyOGZmOTZkM2FjYTAiLCJ3b3Jrc3BhY2VOYW1lIjoiam91cm5leSIsImlhdCI6MTY5MTg1NjM0OSwiZXhwIjoxNzE3Nzc2MzQ5fQ.DuFnyueBeB2PB8r61TN8N2KYDwJCbGl6Z4xbqHq5J9g -m settings -p dist/settings-module --build angular",
+    "start": "accounting-cli -t eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGFlZGY2YmRmMWRhOTkwZWI0MmI1YjQiLCJjb21wYW55SWQiOiI2NGQ3OWZlMWVjYzEyOGZmOTZkM2FjYTAiLCJ3b3Jrc3BhY2VOYW1lIjoiam91cm5leSIsImlhdCI6MTY5MTg1NjM0OSwiZXhwIjoxNzE3Nzc2MzQ5fQ.DuFnyueBeB2PB8r61TN8N2KYDwJCbGl6Z4xbqHq5J9g -m directory -p dist/directory-module --watch true --build angular",
+    "build": "accounting-cli -t eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGFlZGY2YmRmMWRhOTkwZWI0MmI1YjQiLCJjb21wYW55SWQiOiI2NGQ3OWZlMWVjYzEyOGZmOTZkM2FjYTAiLCJ3b3Jrc3BhY2VOYW1lIjoiam91cm5leSIsImlhdCI6MTY5MTg1NjM0OSwiZXhwIjoxNzE3Nzc2MzQ5fQ.DuFnyueBeB2PB8r61TN8N2KYDwJCbGl6Z4xbqHq5J9g -m directory -p dist/directory-module --build angular",
     "serve": "ng serve --port 3000"
   },
   "private": true,

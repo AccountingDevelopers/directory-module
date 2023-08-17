@@ -6,18 +6,15 @@
     <lib-table [config]="{
         mode: 'default',
         module: {
-            data: moduleData,
-            type: 'datasets',
-            identifier: 'nomenclatures.types',
+            identifier: 'nomenclatures',
+            type: 'types',
             internalEvents: true
-        },
-        data: moduleData.elements,  
-        fields: moduleData.fields
+        }
     }"></lib-table>
 </div>
 
-<p-dialog [header]="'Создать вид номенклатуры'" appendTo="body" styleClass="modal" [maximizable]="true" [draggable]="true"
-    [resizable]="true" [(visible)]="dialogStage.isCreateElement">
+<p-dialog [header]="'Создать вид номенклатуры'" appendTo="body" styleClass="modal" [maximizable]="true"
+    [draggable]="true" [resizable]="true" [(visible)]="dialogStage.isCreateElement">
 
     <div [formGroup]="createElementForm">
         <span class="p-fluid p-field">

@@ -13,14 +13,12 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { NomenclatureRoutingModule } from './nomenclature-routing.module';
 import { BasicComponent } from './basic/basic.component';
 import { TypesComponent } from './types/types.component';
-import { PriceTypesComponent } from './price-types/price-types.component';
 
 @NgModule({
   declarations: [
     NomenclatureComponent,
     BasicComponent,
     TypesComponent,
-    PriceTypesComponent
   ],
   imports: [
     CommonModule,

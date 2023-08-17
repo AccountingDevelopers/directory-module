@@ -18,11 +18,6 @@ export class NomenclatureComponent implements OnInit {
       label: 'Виды номенклатуры',
       icon: 'pi pi-fw pi-home',
       routerLink: 'types'
-    },
-    {
-      label: 'Типы цен номенклатуры',
-      icon: 'pi pi-fw pi-home',
-      routerLink: 'priceTypes'
     }
   ]
 

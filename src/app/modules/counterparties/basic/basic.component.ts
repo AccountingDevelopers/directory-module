@@ -1,7 +1,6 @@
-import { FormControl, FormGroup } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
-import { convertArrayToTree, AccTableService, } from 'ng-accounting';
-import { AccStoreService } from 'ng-accounting';
+import { FormControl, FormGroup } from '@angular/forms';
+import { AccStoreService, AccTableService, convertArrayToTree } from 'ng-accounting';
 
 @Component({
   selector: 'app-basic',
@@ -14,22 +13,16 @@ export class BasicComponent implements OnInit {
     private readonly accStoreService: AccStoreService
   ) { }
 
-  elementsGroups: any[] = []
-
   dialogStage: any = {
     isCreateElement: false,
     isCreateElementsGroup: false
   }
 
+  elementsGroups: any[] = []
   createElementForm: FormGroup = new FormGroup({
     label: new FormControl(null),
     parentId: new FormControl(null),
-    code: new FormControl(null),
-    article: new FormControl(null),
-    description: new FormControl(null),
-    children: new FormControl([]),
-    isGroup: new FormControl(false),
-    nomenclatureTypes: new FormControl(null)
+    isGroup: new FormControl(false)
   })
 
   createElementsGroupForm: FormGroup = new FormGroup({
@@ -45,13 +38,13 @@ export class BasicComponent implements OnInit {
   async init() {
     const elements = await this.accStoreService.get({
       type: 'basic',
-      identifier: 'nomenclatures'
+      identifier: 'counterparties'
     }, 'elements')
     this.elementsGroups = convertArrayToTree(elements.filter((e: any) => e.isGroup))
   }
 
   createElement(isGroup: boolean = false) {
-    const data = isGroup ? this.createElementsGroupForm : this.createElementForm.value
+    const data = isGroup ? this.createElementsGroupForm.value : this.createElementForm.value
     this.accTableService.createElement(data)
     this.closeDialogs()
   }

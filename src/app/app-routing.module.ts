@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InitialMenuComponent } from 'ng-accounting';
-import { WarehousesComponent } from './modules/warehouses/warehouses.component';
-import { CounterpartiesComponent } from './modules/counterparties/counterparties.component';
-import { CurrenciesComponent } from './modules/currencies/currencies.component';
-import { UnitsComponent } from './modules/units/units.component';
 
 const routes: Routes = [
   {
@@ -52,20 +48,9 @@ const routes: Routes = [
       import('./modules/nomenclature/nomenclature.module').then((m) => m.NomenclatureModule)
   },
   {
-    path: 'warehouses',
-    component: WarehousesComponent
-  },
-  {
     path: 'counterparties',
-    component: CounterpartiesComponent
-  },
-  {
-    path: 'currencies',
-    component: CurrenciesComponent
-  },
-  {
-    path: 'units',
-    component: UnitsComponent
+    loadChildren: () =>
+      import('./modules/counterparties/counterparties.module').then((m) => m.CounterpartiesModule)
   }
 ]
 

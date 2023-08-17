@@ -1,42 +1,39 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { CounterpartiesRoutingModule } from './counterparties-routing.module';
 import { CounterpartiesComponent } from './counterparties.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ModuleHeaderModule, AccTableModule } from 'ng-accounting';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ModuleHeaderModule, AccTableModule, ElementFieldModule } from 'ng-accounting';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { MultiSelectModule } from 'primeng/multiselect';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { TabViewModule } from 'primeng/tabview';
 import { TreeSelectModule } from 'primeng/treeselect';
-import { TreeTableModule } from 'primeng/treetable';
-import { FieldsetModule } from 'primeng/fieldset';
-import { ChipsModule } from 'primeng/chips';
+import { BasicComponent } from './basic/basic.component';
+
 
 @NgModule({
   declarations: [
-    CounterpartiesComponent
+    CounterpartiesComponent,
+    BasicComponent
   ],
   imports: [
     CommonModule,
+    CounterpartiesRoutingModule,
     ModuleHeaderModule,
     ButtonModule,
-    TreeTableModule,
     DialogModule,
     ReactiveFormsModule,
     InputTextModule,
     InputTextareaModule,
     TreeSelectModule,
-    DropdownModule,
-    MultiSelectModule,
-    FormsModule,
-    FieldsetModule,
-    ChipsModule,
-    AccTableModule
-  ],
-  exports: [
-    CounterpartiesComponent
+    AccTableModule,
+    TabViewModule,
+    TabMenuModule,
+    ElementFieldModule
   ]
 })
 export class CounterpartiesModule { }
