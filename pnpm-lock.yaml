@@ -32,6 +32,9 @@ dependencies:
   '@angular/router':
     specifier: ^15.1.0
     version: 15.1.0(@angular/common@15.1.0)(@angular/core@15.1.0)(@angular/platform-browser@15.1.0)(rxjs@7.8.0)
+  ng-accounting:
+    specifier: link:C:/Users/pro10/Desktop/ng-accounting/dist/ng-accounting
+    version: link:../ng-accounting/dist/ng-accounting
   primeicons:
     specifier: ^6.0.1
     version: 6.0.1

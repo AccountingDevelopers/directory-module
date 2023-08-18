@@ -4,7 +4,7 @@ import { InitialMenuComponent } from 'ng-accounting';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'api/v1/modules',
     pathMatch: 'full',
     component: InitialMenuComponent,
     data: {

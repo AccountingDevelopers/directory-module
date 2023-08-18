@@ -6,7 +6,7 @@ import { TypesComponent } from './types/types.component'
 
 const routes: Routes = [
     { 
-        path: '', 
+        path: 'api/v1/modules/nomenclature', 
         component: NomenclatureComponent,
         children: [
             {
