@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'initial-angular-module'`, () => {
+  it(`should have as title 'directory-module'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('initial-angular-module');
+    expect(app.title).toEqual('directory-module');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('initial-angular-module app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('directory-module app is running!');
   });
 });

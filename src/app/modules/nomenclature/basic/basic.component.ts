@@ -47,6 +47,9 @@ export class BasicComponent implements OnInit {
       type: 'basic',
       identifier: 'nomenclatures'
     }, 'elements')
+
+    console.log('elements', elements);
+    
     this.elementsGroups = convertArrayToTree(elements.filter((e: any) => e.isGroup))
   }
 
