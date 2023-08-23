@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NgAccountingModule } from 'ng-accounting';
 import { NomenclatureModule } from './modules/nomenclature/nomenclature.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CardModule } from './modules/counterparties/basic/card/card.module';
 
 @NgModule({
   declarations: [
@@ -16,9 +17,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     NomenclatureModule,
     BrowserAnimationsModule,
+    CardModule,
     NgAccountingModule.forRoot({
       api: {
-        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGFlZGY2YmRmMWRhOTkwZWI0MmI1YjQiLCJjb21wYW55SWQiOiI2NGQ3OWZlMWVjYzEyOGZmOTZkM2FjYTAiLCJ3b3Jrc3BhY2VOYW1lIjoiam91cm5leSIsImlhdCI6MTY5MTg1NjM0OSwiZXhwIjoxNzE3Nzc2MzQ5fQ.DuFnyueBeB2PB8r61TN8N2KYDwJCbGl6Z4xbqHq5J9g',
+        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGRmZWRmMzVlYWNiNGI1MjdjMzU3NTciLCJjb21wYW55SWQiOiI2NGRmZjBkZTM5MDliODZiYzliZDViNzMiLCJ3b3Jrc3BhY2VOYW1lIjoiam91cm5leSIsImlhdCI6MTY5MjUyNjAzMSwiZXhwIjoxNzE4NDQ2MDMxfQ.gM66vgUITeSWQ4K29G17uNqUcQqXhTafyCUoKMtuCWE',
         url: {
           client: 'http://localhost:4200',
           server: isDevMode() ? 'http://localhost:80/api/v1' : 'http://localhost:80/api/v1'

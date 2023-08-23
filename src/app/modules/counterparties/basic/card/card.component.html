@@ -1,0 +1,7 @@
+<div class="module">
+    <lib-module-header [header]="'Александр Долгий'">
+        <ng-template templateRef="headerToolbar"></ng-template>
+    </lib-module-header>
+    <p-tabMenu [model]="menuList" [scrollable]="true" [(activeItem)]="activeItem"></p-tabMenu>
+    <router-outlet></router-outlet>
+</div>

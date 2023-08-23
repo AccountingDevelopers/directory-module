@@ -13,12 +13,14 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { BasicComponent } from './basic/basic.component';
+import { ListComponent } from './basic/list/list.component';
 
 
 @NgModule({
   declarations: [
     CounterpartiesComponent,
-    BasicComponent
+    BasicComponent,
+    ListComponent
   ],
   imports: [
     CommonModule,

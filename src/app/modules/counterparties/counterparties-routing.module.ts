@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CounterpartiesComponent } from './counterparties.component';
-import { BasicComponent } from './basic/basic.component';
+import { CardComponent } from './basic/card/card.component';
+import { ListComponent } from './basic/list/list.component';
 
 const routes: Routes = [
   {
@@ -10,9 +11,14 @@ const routes: Routes = [
     children: [
       {
         path: 'basic',
-        component: BasicComponent
+        component: ListComponent,
       }
     ]
+  },
+  {
+    path: 'basic/:id',
+    loadChildren: () =>
+      import('./basic/card/card.module').then((m) => m.CardModule)
   }
 ];
 

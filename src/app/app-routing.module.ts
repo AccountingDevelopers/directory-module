@@ -4,7 +4,7 @@ import { InitialMenuComponent } from 'ng-accounting';
 
 const routes: Routes = [
   {
-    path: 'api/v1/modules',
+    path: '',
     pathMatch: 'full',
     component: InitialMenuComponent,
     data: {
@@ -15,10 +15,6 @@ const routes: Routes = [
             {
               label: 'Номенклатура',
               link: 'nomenclature'
-            },
-            {
-              label: 'Склади',
-              link: 'warehouses'
             }
           ]
         },
@@ -28,14 +24,6 @@ const routes: Routes = [
             {
               label: 'Контрагенти',
               link: 'counterparties'
-            },
-            {
-              label: 'Валюти',
-              link: 'currencies'
-            },
-            {
-              label: 'Еденицы измерения',
-              link: 'units'
             }
           ]
         }
